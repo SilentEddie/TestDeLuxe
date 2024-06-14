@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
+    <script defer src="auth.js"></script>
+    <title>Basic Auth Example</title>
+</head>
+
+<body>
+    <main>
+        <form id="authform" class="form">
+            <div class="labelwrapper">
+                <label for="username"><span>Username</span><span>:</span></label>
+            </div>
+            <input autocomplete="off" spellcheck="false" type="text" id="username" name="username" required>
+            <div class="labelwrapper">
+                <label for="password"><span>Password</span><span>:</span></label>
+            </div>
+            <input autocomplete="off" spellcheck="false" type="password" id="password" name="password" required>
+            <div class="icon" id="showpassword"><div class="emoji">👁️</div></div>
+            <button type="submit" id="login">Login</button>
+        </form>
+    </main>
+</body>
+
+</html>
