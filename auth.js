@@ -1,32 +1,62 @@
 initializeAuthForm();
 
 function initializeAuthForm() {
-    //document.getElementById("hybrid").type = "password";
-    document.getElementById("password").addEventListener("submit", handleFormSubmit);
+        //document.getElementById("hybrid").type = "password";
+    addSubmitListener();
     addEyeMovement()
+}
+
+function addSubmitListener() {
+    document.getElementById("password").addEventListener("submit", handleFormSubmit);
 }
 
 function addEyeMovement() {
     document.addEventListener("mousemove", (event) => {
-        const emoji = document.getElementsByClassName("emoji")[0];
-        const rect = emoji.getBoundingClientRect();
-        const centerX = rect.left + rect.width;
-        const centerY = rect.top + rect.height;
+        const eye = document.getElementsByClassName("eye")[0];
+        const rect = eye.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
 
         const deltaX = event.clientX - centerX;
         const deltaY = event.clientY - centerY;
 
-        emoji.classList.remove("right", "down", "left");
+        const newXClass = getEyeXClass(deltaX);
+        const newYClass = getEyeYClass(deltaY);
+        eye.classList.add(newXClass, newYClass);
 
-        if (deltaX > 0) {
-            emoji.classList.add("right");
-        } else if (deltaX < 0) {
-            emoji.classList.add("left");
-        } 
-        if (deltaY > 0) {
-            emoji.classList.add("down");
-        }
+        const allClasses = ["x-left", "x-right", "y-up", "y-down", "x-center", "y-center"];
+
+        const newClasses = [newXClass, newYClass];
+
+        const classesToRemove = allClasses.filter((c) => !newClasses.includes(c));
+
+        eye.classList.add(newXClass, newYClass);
+        eye.classList.remove(...classesToRemove);
+
     });
+}
+
+
+function getEyeXClass(deltaX) {
+    const width = document.getElementsByClassName("eye")[0].offsetWidth;
+    if (deltaX > width) {
+        return "x-right";
+    } else if (deltaX < -width) {
+        return "x-left";
+    } else {
+        return "x-center";
+    }
+}
+
+function getEyeYClass(deltaY) {
+    const height = document.getElementsByClassName("eye")[0].offsetHeight;
+    if (deltaY > height) {
+        return "y-down";
+    } else if (deltaY < -height) {
+        return "y-up";
+    } else {
+        return "y-center";
+    }
 }
 
 async function handleFormSubmit(event) {
